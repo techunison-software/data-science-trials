@@ -4,8 +4,8 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import Imputer
 
-dataset = pd.read_csv('E:/DataScienceTrials/Vijay/Titanic Dataset/INPUT/train.csv')
-test_data = pd.read_csv('E:/DataScienceTrials/Vijay/Titanic Dataset/INPUT/test.csv')
+dataset = pd.read_csv('E:/LINEARREGRESSION/Vijay/Titanic Dataset/INPUT/train.csv')
+test_data = pd.read_csv('E:/LINEARREGRESSION/Vijay/Titanic Dataset/INPUT/test.csv')
 
 y_train = dataset.iloc[:, 1].values
 X_train = dataset.iloc[:, [2, 4, 5, 6]].values
@@ -99,6 +99,6 @@ regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
 regressor_OLS.summary()
 
 df = pd.DataFrame({'PassengerId': pd.Series(range(892, 1310)), 'Survived': final_pred})
-df.to_csv('E:/DataScienceTrials/Vijay/Titanic Dataset/output.csv', index = False)
+df.to_csv('E:/LINEARREGRESSION/Vijay/Titanic Dataset/output.csv', index = False)
 
 
