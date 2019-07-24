@@ -18,19 +18,19 @@ fig=plt.figure() #Plots in matplotlib reside within a figure object, use plt.fig
 #Create one or more subplots using add_subplot, because you can't create blank figure
 ax = fig.add_subplot(1,1,1)
 #Variable
-ax.hist(dataset['Age'],bins = 30) # Here you can play with number of bins
+ax.hist(dataset['Pclass'],bins = 30) # Here you can play with number of bins
 # Labels and Tit
 plt.title('Fare distribution')
-plt.xlabel('Age')
+plt.xlabel('Pclass')
 plt.ylabel('Fare')
 plt.show()
 
 #Column Chart
 
 dataset.plot.bar()   
-plt.bar(dataset['PassengerId'], dataset['Age']) 
+plt.bar(dataset['PassengerId'], dataset['Pclass']) 
 plt.xlabel("PassengerId") 
-plt.ylabel("Age") 
+plt.ylabel("Pclass") 
 plt.show() 
 
 # Box Plot Chart
