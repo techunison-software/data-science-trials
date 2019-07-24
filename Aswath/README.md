@@ -1,1 +1,1 @@
-You are in Aswath's workspace-branch of his data science expermients and trail runs.
+You are in Aswath's workspace-folder of his data science expermients and trail runs.
