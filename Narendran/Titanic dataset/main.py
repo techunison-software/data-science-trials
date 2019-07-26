@@ -190,7 +190,8 @@ Y_train = dataset[0]["Survived"]
 X_train = dataset[0].drop("Survived",axis=1)
 X_test = dataset[1].copy()
 
-# # ============================================== Feature selection to Find what Feature contribution are Valid========================================
+
+# ============================================== Feature selection to Find what Feature contribution are Valid========================================
 
 # from sklearn.model_selection import StratifiedKFold
 # from sklearn.feature_selection import RFECV
@@ -198,8 +199,8 @@ X_test = dataset[1].copy()
 # from sklearn.naive_bayes import MultinomialNB
 
 # # Create the RFE object and compute a cross-validated score.
-# # est = SVC(kernel="linear",C=0.01) #Penalty parameter C of the error term.
-# est=LogisticRegression()
+# est = SVC(C= 0.7,gamma=.07,  kernel= 'linear') #Penalty parameter C of the error term.
+# # est=LogisticRegression(solver='lbfgs')
 # # est = MultinomialNB(alpha=0.5)
 # # The "accuracy" scoring is proportional to the number of correct classifications
 # rfecv = RFECV(estimator=est, step=1, cv=StratifiedKFold(3),scoring='accuracy')
@@ -210,10 +211,14 @@ X_test = dataset[1].copy()
 # n_fest_opt = rfecv.n_features_
 # rfopt_sup = rfecv.support_
 # rfopt_rank = rfecv.ranking_
-# rfopt_grid = rfecv.grid_scores_\
+# rfopt_grid = rfecv.grid_scores_
 
 # print("rfopt_sup - ",rfopt_sup,"\nrfopt_grid - ",rfopt_grid,"\nrfopt_rank - ",rfopt_rank)
 # print("\nn_fest_opt - ",n_fest_opt)
+
+# feature_plt=pd.Series(rfopt_grid,X_train.columns)
+# feature_plt.plot('barh')
+# plt.show()
 
 # ================================================ Grid Search Common Function to Find Best Param Given Model and Params====================================
 
@@ -239,9 +244,10 @@ def grid_search_fn(model,param_grid):
 #               "criterion": ["gini", "entropy"]}
 # grid_search_fn(RandomForestClassifier(),param_grid)
 
-# #------------------------------------ Grid Search to Find Best Param for SVC---------------------------------
+#------------------------------------ Grid Search to Find Best Param for SVC---------------------------------
 # param_grid = [
 #     {'kernel':['rbf'], 'C':[0.7,0.8,1], 'gamma':[0.07, 0.08, 0.09]},
+#     {'kernel':['linear'], 'C':[0.7,0.8,1], 'gamma':[0.07, 0.08, 0.09]},
 #     {'kernel':['poly'],'C':[0.1,1,10,100], 'gamma':['auto']}
 #   ]
 # grid_search_fn(SVC(),param_grid)
@@ -283,7 +289,7 @@ def grid_search_fn(model,param_grid):
 # acc_svc = round(svc.score(X_train, Y_train) * 100, 2)
 # print('SVC - ',acc_svc)
 
-# # ------------------------------------Applying LogisticRegression Model for Prediction ---------------------------------
+# ------------------------------------Applying LogisticRegression Model for Prediction ---------------------------------
 # logreg = LogisticRegression(solver='lbfgs')
 # logreg.fit(X_train, Y_train)
 # Y_pred = logreg.predict(X_test)
@@ -293,6 +299,20 @@ def grid_search_fn(model,param_grid):
 
 # acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
 # print('Logistic Regression - ',acc_log)
+
+# ================================================== Applying confusion_matrix to Results ======================================================
+
+# from sklearn.metrics import confusion_matrix
+# from sklearn.metrics import accuracy_score 
+# from sklearn.metrics import classification_report 
+
+# cm=confusion_matrix(Y_test, Y_pred)
+# plt.imshow(cm, cmap='binary')
+# plt.show()
+
+# print ('Accuracy Score : ',accuracy_score(actual, predicted)) 
+# print ('Report : ')
+# print classification_report(actual, predicted) 
 
 print("-----------------------------------End------------------------------")
 
