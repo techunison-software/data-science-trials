@@ -17,6 +17,7 @@ print('Count by class: ')
 print(df_training.Pclass.value_counts())
 
 print('count by sex: ')
+print(df_training.Sex.value_counts())
 
 print('Cabin or without cabin count')
 print('Without cabin', df_training.Cabin.isnull().sum())
