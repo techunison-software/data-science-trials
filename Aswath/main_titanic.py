@@ -45,16 +45,16 @@ X_opt = X_train[:, [0, 1, 2, 3]]
 reg = linear_model.LinearRegression()
 reg.fit(y_train.reshape(-1, 1), X_opt)
 
-# regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
-# regressor_OLS.summary()
+regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
+regressor_OLS.summary()
 
-# X_opt = X_train[:, [0, 1, 2]]
-# regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
-# regressor_OLS.summary()
+X_opt = X_train[:, [0, 1, 2]]
+regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
+regressor_OLS.summary()
 
-# X_opt = X_train[:, [0, 1]]
-# regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
-# regressor_OLS.summary()
+X_opt = X_train[:, [0, 1]]
+regressor_OLS = sm.OLS(endog=y_train, exog=X_opt.astype(float)).fit()
+regressor_OLS.summary()
 test_data = pd.read_csv(testpath)
 test_data['Survived']=final_pred
 test_data=test_data.drop('Cabin',axis=1)
