@@ -45,12 +45,12 @@ X_test[:, 1] = labelencoder_x.fit_transform(X_test[:, 1].astype(str))
 
 # Linear Regression
 
-# regressor = LinearRegression()
-# regressor.fit(X_train, y_train)
-# y_pred = regressor.predict(X_test)
-# final_pred = np.around(y_pred)
-# acc_lin = round(regressor.score(X_train, y_train) * 100, 2)
-# print('The score of the Linear regression is : ',acc_lin)
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+y_pred = regressor.predict(X_test)
+final_pred = np.around(y_pred)
+acc_lin = round(regressor.score(X_train, y_train) * 100, 2)
+print('The score of the Linear regression is : ',acc_lin)
 
 
 # Logistic Regression
@@ -84,7 +84,7 @@ final_pred=np.around(Y_pred)
 acc_knn = round(knn.score(X_train, y_train) * 100, 2)
 print('The score of K-Nearest Neighbours is : ',acc_knn)
 
-Gaussian Naive Bayes
+#Gaussian Naive Bayes
 
 from sklearn.naive_bayes import GaussianNB
 gaussian = GaussianNB(priors=None, var_smoothing=1e-09)
