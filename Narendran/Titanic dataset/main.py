@@ -10,6 +10,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
 
 filename = inspect.getframeinfo(inspect.currentframe()).filename
 path     = os.path.dirname(os.path.abspath(filename))
@@ -193,6 +194,7 @@ X_test = dataset[1].copy()
 
 # ============================================== Feature selection to Find what Feature contribution are Valid========================================
 
+# ------------------------------------ To identify Important feature using feature_selection PACKAGE-------------------------------------
 # from sklearn.model_selection import StratifiedKFold
 # from sklearn.feature_selection import RFECV
 # from sklearn.datasets import make_classification
@@ -219,6 +221,13 @@ X_test = dataset[1].copy()
 # feature_plt=pd.Series(rfopt_grid,X_train.columns)
 # feature_plt.plot('barh')
 # plt.show()
+
+# ----------------------------------------- To identify Feature importance Another method--------------------------------
+# random_forest=RandomForestClassifier().fit(X_train,Y_train)
+# importances = pd.DataFrame({'feature':X_train.columns,'importance':np.round(random_forest.feature_importances_,3)})
+# print(importances)
+# importances = importances.sort_values('importance',ascending=False).set_index('feature')
+# print(importances.head(10))
 
 # ================================================ Grid Search Common Function to Find Best Param Given Model and Params====================================
 
@@ -258,6 +267,33 @@ def grid_search_fn(model,param_grid):
 # }
 # grid_search_fn(KNeighborsClassifier(),param_grid)
 
+# ================================================== Getting confusion_matrix with Scores======================================================
+
+# ------------------------ Returns a 2X2 matrix listing true negatives, false postives, false negatives and true positives (a confusion matrix)-------------------
+def get_confused_mat(X, y):    
+    classifier = LogisticRegression()
+    classifier.fit(X, y)
+    return confusion_matrix(y, classifier.predict(X))
+
+# ----------------------------------------------- Returns relevant confusion matrix scores------------------------------------
+confusion_scores = []
+def get_confusion_scores(clf, X, y):
+    # accuracy: fraction of the classifier's predictions that are correct.
+    accuracy = cross_val_score(clf, X, y, cv=5, scoring='accuracy')
+
+    # precision: fraction of correct positive predictions.
+    # A precision score of one indicates the classifier did not make any false positive predictions.
+    precision = cross_val_score(clf, X, y, cv=5, scoring='precision')
+
+    # recall: fraction of truly positive instances the classifier recognizes.
+    # A recall score of one indicates the classifier did not make any false negative predictions.
+    recall = cross_val_score(clf, X, y, cv=5, scoring='recall')
+
+    # F1: harmonic mean bw precision and recall
+    f1 = cross_val_score(clf, X, y, cv=5, scoring='f1')
+    
+    return {'accuracy': np.mean(accuracy),'precision': np.mean(precision),'recall': np.mean(recall),'f1': np.mean(f1)}
+
 # ================================================== Applying MODELS ======================================================
 
 # # ------------------------------------Applying Simple Linear Regression Model for Prediction ---------------------------------
@@ -277,6 +313,7 @@ def grid_search_fn(model,param_grid):
 
 # acc_knn = round(knn.score(X_train, Y_train) * 100, 2)
 # print("KNN - ",acc_knn)
+# print(get_confusion_scores(knn,X_train, Y_train))
 
 # # ------------------------------------Applying SVC Model for Prediction ---------------------------------
 # svc = SVC(C= 1, gamma= 0.09, kernel= 'rbf')                                             # Based on Gamma value score changes {'auto','scale'}
@@ -288,8 +325,9 @@ def grid_search_fn(model,param_grid):
 
 # acc_svc = round(svc.score(X_train, Y_train) * 100, 2)
 # print('SVC - ',acc_svc)
+# print(get_confusion_scores(svc,X_train, Y_train))
 
-# ------------------------------------Applying LogisticRegression Model for Prediction ---------------------------------
+# # ------------------------------------Applying LogisticRegression Model for Prediction ---------------------------------
 # logreg = LogisticRegression(solver='lbfgs')
 # logreg.fit(X_train, Y_train)
 # Y_pred = logreg.predict(X_test)
@@ -299,6 +337,7 @@ def grid_search_fn(model,param_grid):
 
 # acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
 # print('Logistic Regression - ',acc_log)
+# print(get_confusion_scores(logreg,X_train, Y_train))
 
 # ================================================== Applying confusion_matrix to Results ======================================================
 
@@ -306,13 +345,14 @@ def grid_search_fn(model,param_grid):
 # from sklearn.metrics import accuracy_score 
 # from sklearn.metrics import classification_report 
 
-# cm=confusion_matrix(Y_test, Y_pred)
+# cm=confusion_matrix(Y_train, Y_pred)
 # plt.imshow(cm, cmap='binary')
 # plt.show()
 
 # print ('Accuracy Score : ',accuracy_score(actual, predicted)) 
 # print ('Report : ')
 # print classification_report(actual, predicted) 
+
 
 print("-----------------------------------End------------------------------")
 
