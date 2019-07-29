@@ -19,14 +19,18 @@ path     = os.path.dirname(os.path.abspath(filename))
 
 train_df=pd.read_csv(path+"/input/train.csv")
 test_df=pd.read_csv(path+"/input/test.csv")
+gender_submission_df=pd.read_csv(path+"/input/gender_submission.csv")
 
 datasets=[train_df,test_df]
 dataset = datasets.copy()
 
-# print(train_df.columns.values)
-# print(test_df.columns.values)
+# print(train_df.describe()
+# print(train_df.describe(include=['O']))
 
 # print(train_df.head(20))
+
+# print("Train DF Info \n",train_df.info())
+# print("\n Test DF Info \n",test_df.info())
 
 # ========================================== Finding Missing Data =============================================
 def missing_values_table(df):
@@ -46,6 +50,17 @@ def missing_values_table(df):
 # print(missing_values_table(test_df))
 
 # ======================================== Finding Correlation between Attributes using PLOTS ======================================
+
+num=['Age','SibSp','Parch','Fare']
+
+corr_df=train_df[num]  #New dataframe to calculate correlation between numeric features
+cor= corr_df.corr(method='pearson')
+# print(cor)
+
+# # ---------------------------------------- Plotting Heatmap for Numeric Feature Correlation -------------------------------------
+# fig, ax =plt.subplots(figsize=(10, 6))
+# plt.title("Correlation Plot")
+# sns.heatmap(cor, mask=np.zeros_like(cor, dtype=np.bool), cmap=sns.diverging_palette(220, 10, as_cmap=True), square=True, ax=ax)
 
 # # ----------------------------------------Barchart Representation of Survived by Pclass-------------------------------------
 # sns.barplot(x='Pclass', y='Survived', data=train_df)
@@ -190,7 +205,6 @@ dataset[1] = dataset[1].drop(['Ticket','Fare','PassengerId','Cabin','Name'], axi
 Y_train = dataset[0]["Survived"]
 X_train = dataset[0].drop("Survived",axis=1)
 X_test = dataset[1].copy()
-
 
 # ============================================== Feature selection to Find what Feature contribution are Valid========================================
 
@@ -345,14 +359,16 @@ def get_confusion_scores(clf, X, y):
 # from sklearn.metrics import accuracy_score 
 # from sklearn.metrics import classification_report 
 
-# cm=confusion_matrix(Y_train, Y_pred)
+# actual=gender_submission_df["Survived"].tolist()
+
+# cm=confusion_matrix(actual, Y_pred)
 # plt.imshow(cm, cmap='binary')
 # plt.show()
+# print(cm)
 
-# print ('Accuracy Score : ',accuracy_score(actual, predicted)) 
-# print ('Report : ')
-# print classification_report(actual, predicted) 
-
+# print('\n ----------------- Actual Scores With Respect to Given gender_submission.csv -----------------')
+# print('Accuracy Score : ',accuracy_score(actual, Y_pred)) 
+# print('Report : ',classification_report(actual, Y_pred))
 
 print("-----------------------------------End------------------------------")
 
