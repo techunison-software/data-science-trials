@@ -1,7 +1,3 @@
-
-
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,13 +10,12 @@ from sklearn.preprocessing import Imputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
 
-
 dataset = pd.read_csv('E:/LINEARREGRESSION/Vijay/Titanic Dataset/INPUT/train.csv')
 test_data = pd.read_csv('E:/LINEARREGRESSION/Vijay/Titanic Dataset/INPUT/test.csv')
 gender_sub=pd.read_csv('E:/LINEARREGRESSION/Vijay/Titanic Dataset/INPUT/gender_submission.csv')
 
 gender_sub = gender_sub[['PassengerId', 'Survived']]
-X_gender_sub = gender_sub.iloc[:, [0]].values
+X_gender_sub = gender_sub.iloc[:, [1]].values
 
 y_train = dataset.iloc[:, 1].values
 X_train = dataset.iloc[:, [2, 4, 5, 6]].values
@@ -43,101 +38,101 @@ X_test[:, 1] = labelencoder_x.fit_transform(X_test[:, 1].astype(str))
 
 ##################################################################################################################################
 
-# Linear Regression
+# # Linear Regression
 
-regressor = LinearRegression()
-regressor.fit(X_train, y_train)
-y_pred = regressor.predict(X_test)
-final_pred = np.around(y_pred)
-acc_lin = round(regressor.score(X_train, y_train) * 100, 2)
-print('The score of the Linear regression is : ',acc_lin)
-
-
-# Logistic Regression
-
-logreg = LogisticRegression(penalty='l1',C=2.0,solver ='liblinear',max_iter=90)
-logreg.fit(X_train, y_train)
-Y_pred = logreg.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_log = round(logreg.score(X_train, y_train) * 100, 2)
-print('The score of the Logistic regression is : ',acc_log)
+# regressor = LinearRegression()
+# regressor.fit(X_train, y_train)
+# y_pred = regressor.predict(X_test)
+# final_pred = np.around(y_pred)
+# acc_lin = round(regressor.score(X_train, y_train) * 100, 2)
+# print('The score of the Linear regression is : ',acc_lin)
 
 
-#Support Vector Machines
+# # Logistic Regression
 
-from sklearn.svm import SVC
-svc = SVC(probability=True,gamma = 'scale',kernel='rbf')
-svc.fit(X_train, y_train)
-Y_pred = svc.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_svc = round(svc.score(X_train, y_train) * 100, 2)
-print('The score of the Support Vector Machine is : ',acc_svc)
-
-
-#K-Nearest Neighbours
-
-from sklearn.neighbors import KNeighborsClassifier
-knn = KNeighborsClassifier(n_neighbors = 3)
-knn.fit(X_train, y_train)
-Y_pred = knn.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_knn = round(knn.score(X_train, y_train) * 100, 2)
-print('The score of K-Nearest Neighbours is : ',acc_knn)
-
-#Gaussian Naive Bayes
-
-from sklearn.naive_bayes import GaussianNB
-gaussian = GaussianNB(priors=None, var_smoothing=1e-09)
-gaussian.fit(X_train, y_train)
-Y_pred = gaussian.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_gaussian = round(gaussian.score(X_train, y_train) * 100, 2)
-print('The score of Gaussian Naive Bayes Theorem is : ',acc_gaussian)
-
-#Perceptron
-
-from sklearn.linear_model import Perceptron
-perceptron = Perceptron(alpha=0.0001, class_weight=None, early_stopping=False, eta0=1.0,
-      fit_intercept=True, max_iter=1000, n_iter_no_change=5, n_jobs=None,
-      penalty=None, random_state=0, shuffle=True, tol=0.001,
-      validation_fraction=0.1, verbose=0, warm_start=False)
-perceptron.fit(X_train, y_train)
-Y_pred = perceptron.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_perceptron = round(perceptron.score(X_train, y_train) * 100, 2)
-print('The score of Perceptron is : ', acc_perceptron)
+# logreg = LogisticRegression(penalty='l1',C=2.0,solver ='liblinear',max_iter=90)
+# logreg.fit(X_train, y_train)
+# Y_pred = logreg.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_log = round(logreg.score(X_train, y_train) * 100, 2)
+# print('The score of the Logistic regression is : ',acc_log)
 
 
-#Linear SVM
+# #Support Vector Machines
 
-from sklearn.svm import LinearSVC
-linear_svc = LinearSVC(loss ='hinge',penalty='l2',C=2.0)
-linear_svc.fit(X_train, y_train)
-Y_pred = linear_svc.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_linear_svc = round(linear_svc.score(X_train, y_train) * 100, 2)
-print('The score of LinearSVC is : ', acc_linear_svc)
+# from sklearn.svm import SVC
+# svc = SVC(probability=True,gamma = 'scale',kernel='rbf')
+# svc.fit(X_train, y_train)
+# Y_pred = svc.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_svc = round(svc.score(X_train, y_train) * 100, 2)
+# print('The score of the Support Vector Machine is : ',acc_svc)
 
 
-#Stochastic Gradient Descent
+# #K-Nearest Neighbours
 
-from sklearn.linear_model import SGDClassifier
-sgd = SGDClassifier(loss="hinge", penalty="l2", max_iter=5)
-sgd.fit(X_train, y_train)
-Y_pred = sgd.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_sgd = round(sgd.score(X_train, y_train) * 100, 2)
-print('The score of Stochastic Gradient Descent is : ', acc_sgd)
+# from sklearn.neighbors import KNeighborsClassifier
+# knn = KNeighborsClassifier(n_neighbors = 3)
+# knn.fit(X_train, y_train)
+# Y_pred = knn.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_knn = round(knn.score(X_train, y_train) * 100, 2)
+# print('The score of K-Nearest Neighbours is : ',acc_knn)
 
-#Decision Tree
+# #Gaussian Naive Bayes
 
-from sklearn.tree import DecisionTreeClassifier
-decision_tree = DecisionTreeClassifier(criterion = 'entropy',max_features=3,min_impurity_decrease=0,presort =True)
-decision_tree.fit(X_train, y_train)
-Y_pred = decision_tree.predict(X_test)
-final_pred=np.around(Y_pred)
-acc_decision_tree = round(decision_tree.score(X_train, y_train) * 100, 2)
-print('The score of Decision Tree is : ', acc_decision_tree)
+# from sklearn.naive_bayes import GaussianNB
+# gaussian = GaussianNB(priors=None, var_smoothing=1e-09)
+# gaussian.fit(X_train, y_train)
+# Y_pred = gaussian.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_gaussian = round(gaussian.score(X_train, y_train) * 100, 2)
+# print('The score of Gaussian Naive Bayes Theorem is : ',acc_gaussian)
+
+# #Perceptron
+
+# from sklearn.linear_model import Perceptron
+# perceptron = Perceptron(alpha=0.0001, class_weight=None, early_stopping=False, eta0=1.0,
+#       fit_intercept=True, max_iter=1000, n_iter_no_change=5, n_jobs=None,
+#       penalty=None, random_state=0, shuffle=True, tol=0.001,
+#       validation_fraction=0.1, verbose=0, warm_start=False)
+# perceptron.fit(X_train, y_train)
+# Y_pred = perceptron.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_perceptron = round(perceptron.score(X_train, y_train) * 100, 2)
+# print('The score of Perceptron is : ', acc_perceptron)
+
+
+# #Linear SVM
+
+# from sklearn.svm import LinearSVC
+# linear_svc = LinearSVC(loss ='hinge',penalty='l2',C=2.0)
+# linear_svc.fit(X_train, y_train)
+# Y_pred = linear_svc.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_linear_svc = round(linear_svc.score(X_train, y_train) * 100, 2)
+# print('The score of LinearSVC is : ', acc_linear_svc)
+
+
+# #Stochastic Gradient Descent
+
+# from sklearn.linear_model import SGDClassifier
+# sgd = SGDClassifier(loss="hinge", penalty="l2", max_iter=5)
+# sgd.fit(X_train, y_train)
+# Y_pred = sgd.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_sgd = round(sgd.score(X_train, y_train) * 100, 2)
+# print('The score of Stochastic Gradient Descent is : ', acc_sgd)
+
+# #Decision Tree
+
+# from sklearn.tree import DecisionTreeClassifier
+# decision_tree = DecisionTreeClassifier(criterion = 'entropy',max_features=3,min_impurity_decrease=0,presort =True)
+# decision_tree.fit(X_train, y_train)
+# Y_pred = decision_tree.predict(X_test)
+# final_pred=np.around(Y_pred)
+# acc_decision_tree = round(decision_tree.score(X_train, y_train) * 100, 2)
+# print('The score of Decision Tree is : ', acc_decision_tree)
 
 
 #Random Forest
@@ -157,9 +152,6 @@ print('The score of Random Forest is : ',acc_random_forest)
 
 
 
-
-
-
 # Results
 
 results = confusion_matrix(X_gender_sub, final_pred) 
@@ -168,21 +160,6 @@ print(results)
 print ('Accuracy Score :',accuracy_score(X_gender_sub, final_pred)) 
 print ('Classification Report : ')
 print (classification_report(X_gender_sub, final_pred))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
