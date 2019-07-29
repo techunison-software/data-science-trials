@@ -22,6 +22,8 @@ labelencoder_x = LabelEncoder()
 train_df = pd.read_csv('train.csv',index_col=0)
 test_df = pd.read_csv('test.csv')
 
+# print(train_df.isna().sum())
+
 #Filling NA values With Mean
 # train_df = train_df.fillna(train_df.mean())
 # test_df = test_df.fillna(test_df.mean())
@@ -36,15 +38,14 @@ test_df = pd.read_csv('test.csv')
 # train_df = train_df.bfill(axis=0)
 # test_df = test_df.bfill(axis=0)
 
-combine = [train_df, test_df]
+# combine = [train_df, test_df]
+# train_df['Sex'] = labelencoder_x.fit_transform(train_df['Sex'])
+# test_df['Sex'] = labelencoder_x.fit_transform(test_df['Sex'])
+# train_df['Embarked'] = labelencoder_x.fit_transform(train_df['Embarked'].astype(str))
+# test_df['Embarked'] = labelencoder_x.fit_transform(test_df['Embarked'].astype(str))
 
-train_df['Sex'] = labelencoder_x.fit_transform(train_df['Sex'])
-test_df['Sex'] = labelencoder_x.fit_transform(test_df['Sex'])
-train_df['Embarked'] = labelencoder_x.fit_transform(train_df['Embarked'].astype(str))
-test_df['Embarked'] = labelencoder_x.fit_transform(test_df['Embarked'].astype(str))
-
-X = train_df[['Pclass','Sex','Age','SibSp','Parch','Fare','Embarked']]
-y = train_df['Survived']
+# X = train_df[['Pclass','Sex','Age','SibSp','Parch','Fare','Embarked']]
+# y = train_df['Survived']
 
 #Univariate Selection
 # bestfeatures = SelectKBest(score_func=chi2, k=7)
@@ -71,11 +72,10 @@ y = train_df['Survived']
 # g=sns.heatmap(corrmat,annot=True,cmap="RdYlGn")
 # plt.show()
 
+# X_train = train_df[['Pclass','Sex','Age','Parch','Fare','SibSp']]
+# Y_train = train_df["Survived"]
+# X_test  = test_df[['Pclass','Sex','Age','Parch','Fare','SibSp']]
 
-
-X_train = train_df[['Pclass','Sex','Age','Parch','Fare','SibSp']]
-Y_train = train_df["Survived"]
-X_test  = test_df[['Pclass','Sex','Age','Parch','Fare','SibSp']]
 
 # lm2 = LinearRegression()
 # lm2.fit(X_train, Y_train)
@@ -84,8 +84,8 @@ X_test  = test_df[['Pclass','Sex','Age','Parch','Fare','SibSp']]
 # acc_log = round(lm2.score(X_train, Y_train) * 100, 2)
 # print(acc_log)
 
-logreg = LogisticRegression()
-logreg.fit(X_train, Y_train)
-Y_pred = logreg.predict(X_test)
-acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
-print(acc_log)
+# logreg = LogisticRegression()
+# logreg.fit(X_train, Y_train)
+# Y_pred = logreg.predict(X_test)
+# acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
+# print(acc_log)

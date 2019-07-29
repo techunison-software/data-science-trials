@@ -55,19 +55,6 @@ combine = [train_df, test_df]
 # print(acc_log)
 
 
-#Scikit-learn
-# for dataset in combine:
-#     dataset['Sex'] = dataset['Sex'].map( {'female': 1, 'male': 0} ).astype(int)
-
-# feature_cols = ['Sex']
-# X = train_df[feature_cols]
-# y = train_df.Survived
-# lm2 = LinearRegression()
-# lm2.fit(X, y)
-#print(lm2.intercept_)
-#print(lm2.coef_)
-
-
 #try1
 
 train_df = train_df.drop(['Ticket', 'Cabin'], axis=1)
